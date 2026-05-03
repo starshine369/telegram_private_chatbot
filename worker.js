@@ -31,23 +31,18 @@ const topicCreateInFlight = new Map();
 // 管理员权限缓存（实例内）
 const adminStatusCache = new Map();
 
-// --- 本地题库 (15条) ---
+// --- 本地题库 (反AI专用，针对大模型幻觉和常识盲区) ---
 const LOCAL_QUESTIONS = [
-    {"question": "冰融化后会变成什么？", "correct_answer": "水", "incorrect_answers": ["石头", "木头", "火"]},
-    {"question": "正常人有几只眼睛？", "correct_answer": "2", "incorrect_answers": ["1", "3", "4"]},
-    {"question": "以下哪个属于水果？", "correct_answer": "香蕉", "incorrect_answers": ["白菜", "猪肉", "大米"]},
-    {"question": "1 加 2 等于几？", "correct_answer": "3", "incorrect_answers": ["2", "4", "5"]},
-    {"question": "5 减 2 等于几？", "correct_answer": "3", "incorrect_answers": ["1", "2", "4"]},
-    {"question": "2 乘以 3 等于几？", "correct_answer": "6", "incorrect_answers": ["4", "5", "7"]},
-    {"question": "10 加 5 等于几？", "correct_answer": "15", "incorrect_answers": ["10", "12", "20"]},
-    {"question": "8 减 4 等于几？", "correct_answer": "4", "incorrect_answers": ["2", "3", "5"]},
-    {"question": "在天上飞的交通工具是什么？", "correct_answer": "飞机", "incorrect_answers": ["汽车", "轮船", "自行车"]},
-    {"question": "星期一的后面是星期几？", "correct_answer": "星期二", "incorrect_answers": ["星期日", "星期五", "星期三"]},
-    {"question": "鱼通常生活在哪里？", "correct_answer": "水里", "incorrect_answers": ["树上", "土里", "火里"]},
-    {"question": "我们用什么器官来听声音？", "correct_answer": "耳朵", "incorrect_answers": ["眼睛", "鼻子", "嘴巴"]},
-    {"question": "晴朗的天空通常是什么颜色的？", "correct_answer": "蓝色", "incorrect_answers": ["绿色", "红色", "紫色"]},
-    {"question": "太阳从哪个方向升起？", "correct_answer": "东方", "incorrect_answers": ["西方", "南方", "北方"]},
-    {"question": "小狗发出的叫声通常是？", "correct_answer": "汪汪", "incorrect_answers": ["喵喵", "咩咩", "呱呱"]}
+    {"question": "把'森林'这两个字里的'木'全部去掉，还剩什么？", "correct_answer": "什么都没了", "incorrect_answers": ["林", "木", "土"]},
+    {"question": "请输出以下这句话的倒数第二个汉字：'今天天气真不错啊'", "correct_answer": "错", "incorrect_answers": ["不", "啊", "真"]},
+    {"question": "假如我有一把透明的刀，我把它放在水里，刀会变成什么颜色？", "correct_answer": "透明色", "incorrect_answers": ["蓝色", "银色", "黑色"]},
+    {"question": "我父母结婚的时候为什么没有邀请我参加婚礼？", "correct_answer": "因为那时还没你", "incorrect_answers": ["他们忘了", "因为你太小", "你在上学"]},
+    {"question": "小明的爸爸有三个儿子，大儿子叫大毛，二儿子叫二毛，三儿子叫什么？", "correct_answer": "小明", "incorrect_answers": ["三毛", "小毛", "四毛"]},
+    {"question": "树上10只鸟，开枪打死1只，树上还有几只？", "correct_answer": "0只", "incorrect_answers": ["9只", "1只", "10只"]},
+    {"question": "如果昨天是明天的话就好了，这样今天就是周五了。请问今天是周几？", "correct_answer": "周三", "incorrect_answers": ["周四", "周五", "周六"]},
+    {"question": "一个盲人走到悬崖边，为什么他突然停下来了？", "correct_answer": "因为他是个瞎子不是聋子，听到了海浪声或风声(或导盲犬停了)", "incorrect_answers": ["他看到了悬崖", "他忘了带拐杖", "他恐高"]}, // 适当缩短答案适配按钮
+    {"question": "在地上有100元和50元，你只能捡一次，你捡哪个？", "correct_answer": "两个都捡", "incorrect_answers": ["100元", "50元", "都不捡"]},
+    {"question": "一块冰在沙漠里放了一天，最后变成了什么？", "correct_answer": "水蒸气/消失了", "incorrect_answers": ["冰水", "冰块", "温水"]}
 ];
 
 // --- 辅助工具函数 ---
